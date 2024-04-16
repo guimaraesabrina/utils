@@ -1,0 +1,88 @@
+# This script provides steps to install WSL (Windows Subsystem for Linux), Docker, and k3d on Windows.
+
+# Step 1: Enable the Windows Subsystem for Linux
+# Open PowerShell as an administrator and run the following command:
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+# Step 2: Enable the Virtual Machine feature
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+# Step 3: Download the Linux kernel update package
+# Click on this link https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi to download the WSL 2 Linux kernel update package for x64 computers. Run the downloaded update package and complete the installation.
+
+# Step 4: Set WSL 2 as your default version
+wsl --set-default-version 2
+
+# Restart WSL
+wsl --shutdown
+
+# List installed distros
+wsl -l -v
+
+# Install a distro
+wsl install -d {distro}
+
+# List distros available for installation
+wsl --list --online
+
+# Install k3d
+wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.0.0 bash
+
+# Create a cluster with k3d
+k3d cluster create mycluster
+
+# Delete a cluster with k3d
+k3d cluster delete mycluster
+
+# Start a cluster with k3d
+k3d cluster start mycluster
+
+# Stop a cluster with k3d
+k3d cluster stop mycluster
+
+# List k3d clusters
+k3d cluster list
+
+# Import a Docker image to a k3d cluster
+k3d image import my-image:1.0 -c mycluster
+
+# Install kubectl
+sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2 curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+
+# Install Docker
+# Install the prerequisites:
+sudo apt update && sudo apt upgrade
+sudo apt remove docker docker-engine docker.io containerd runc
+sudo apt-get install \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release
+
+# Add the Docker repository to the Ubuntu sources list:
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker Engine
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Grant permission to run Docker with your current user:
+sudo usermod -aG docker $USER
+
+# Start the Docker service
+sudo service docker start
+
+# If you encounter the error "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?", run the following command:
+sudo update-alternatives --config iptables
+# Choose option 1
+
+# If you encounter the error "Got permission denied while trying to connect to the Docker daemon socket at", run the following command:
+sudo chmod 666 /var/run/docker.sock

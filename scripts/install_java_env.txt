@@ -1,0 +1,17 @@
+# Update the package lists for upgrades and new packages
+sudo apt-get update
+
+# Install the default Java Development Kit (JDK)
+sudo apt-get install default-jdk
+
+# Check the path of the installed java
+which java
+
+# Set the JAVA_HOME environment variable
+export JAVA_HOME=/usr/bin/java
+
+# Source the bashrc file to load the new environment variable into the current session
+source ~/.bashrc
+
+# Source the bash_profile to load the new environment variable into the current session
+source ~/.bash_profile

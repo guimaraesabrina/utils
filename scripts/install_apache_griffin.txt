@@ -1,0 +1,31 @@
+# Link to the Apache Griffin Docker guide
+> https://github.com/apache/griffin/blob/master/griffin-doc/docker/griffin-docker-guide.md
+
+# Update the package lists for upgrades and new packages
+$ sudo apt update
+
+# Install Docker Compose
+$ sudo apt install docker-compose
+
+# Set the maximum number of memory map areas a process may have
+$ sudo sysctl -w vm.max_map_count=262144
+
+# Pull the Apache Griffin Docker images
+$ docker pull apachegriffin/griffin_spark2:0.3.0
+$ docker pull apachegriffin/elasticsearch
+$ docker pull apachegriffin/kafka
+
+# Pull the Zookeeper Docker image
+$ docker pull zookeeper:3.5
+
+# Start the Docker Compose application in detached mode
+$ docker-compose -f docker-compose-batch.yml up -d
+
+# List all running Docker containers
+$ docker container ls
+
+# Import JSON files from Apache Griffin to the Postman environment
+> import jsons from apachegriffin/jsons to postman environment
+
+# Check the version of the Apache Griffin API
+> http://localhost:38080/api/v1/version

@@ -1,0 +1,25 @@
+# This script installs Miniconda on a Linux system
+
+# Update the system's package list
+> sudo apt-get update 
+
+# Install wget if it's not already installed
+> sudo apt-get install wget 
+
+# Download the Miniconda installer
+> wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
+
+# Verify the SHA-256 hash of the downloaded file
+> sha256sum Miniconda3-py39_4.12.0-Linux-x86_64.sh 
+
+# Run the Miniconda installer
+> sh ./Miniconda3-py39_4.12.0-Linux-x86_64.sh 
+
+# Start a new bash session so the changes take effect
+> bash 
+
+# Create a new conda environment
+> conda create 
+
+# Deactivate the conda environment when done
+> conda deactivate
