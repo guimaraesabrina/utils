@@ -23,3 +23,7 @@
 
 # Deactivate the conda environment when done
 > conda deactivate
+
+# Some miniconda commands
+
+> conda create --name <environment> python==3.10
