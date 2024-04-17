@@ -1,0 +1,15 @@
+# Install kubectl
+# Update the package list and install necessary dependencies
+sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2 curl
+
+# Add the GPG key for the official Kubernetes repository
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+# Add the Kubernetes repository to the system's package sources
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
+# Update the package list again to include the Kubernetes repository
+sudo apt-get update
+
+# Install kubectl
+sudo apt-get install -y kubectl

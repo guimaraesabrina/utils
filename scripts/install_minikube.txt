@@ -1,0 +1,12 @@
+# Download the latest version of Minikube for Linux
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+# Install Minikube and remove the downloaded file
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
+# Install kubectl using Snap package manager
+sudo snap install kubectl --classic
+
+# Start Minikube using the Docker driver
+minikube start --driver=docker
+
